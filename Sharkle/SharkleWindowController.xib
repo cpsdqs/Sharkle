@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SharkleWindowController" customModule="Sharkle" customModuleProvider="target">
+            <connections>
+                <outlet property="bubbleView" destination="R7I-Xp-XUB" id="KXh-mp-Tdl"/>
+                <outlet property="sharkleView" destination="wOl-7A-B5e" id="KYK-U6-eoI"/>
+                <outlet property="window" destination="F0z-JX-Cv5" id="gIp-Ho-8D9"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Sharkle" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" restorable="NO" hasShadow="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" animationBehavior="none" tabbingMode="disallowed" id="F0z-JX-Cv5">
+            <windowStyleMask key="styleMask" fullSizeContentView="YES"/>
+            <windowCollectionBehavior key="collectionBehavior" canJoinAllSpaces="YES" stationary="YES" ignoresCycle="YES" fullScreenAuxiliary="YES" fullScreenDisallowsTiling="YES"/>
+            <rect key="contentRect" x="196" y="240" width="313" height="296"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1057"/>
+            <view key="contentView" id="se5-gp-TjO">
+                <rect key="frame" x="0.0" y="0.0" width="313" height="296"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="wOl-7A-B5e" customClass="SharkleView" customModule="Sharkle" customModuleProvider="target">
+                        <rect key="frame" x="139" y="0.0" width="174" height="213"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <connections>
+                            <outlet property="menu" destination="x0O-iJ-qmp" id="dYR-SR-iQH"/>
+                        </connections>
+                    </customView>
+                    <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="R7I-Xp-XUB" customClass="BubbleView" customModule="Sharkle" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="159" width="196" height="137"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    </customView>
+                </subviews>
+            </view>
+            <connections>
+                <outlet property="delegate" destination="-2" id="0bl-1N-AYu"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="147"/>
+        </window>
+        <menu id="x0O-iJ-qmp">
+            <items>
+                <menuItem title="About Sharkle" id="9IB-vL-GZb">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="orderFrontStandardAboutPanel:" target="-1" id="cnC-Yu-qH2"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="g3l-YJ-Q5x"/>
+                <menuItem title="Preferences…" keyEquivalent="," id="lWw-Ck-H9V">
+                    <connections>
+                        <action selector="showSharklePreferences:" target="-1" id="chE-cH-XlX"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Jsa-vf-54F"/>
+                <menuItem title="Quit Sharkle" keyEquivalent="q" id="8il-xd-e3B">
+                    <connections>
+                        <action selector="terminate:" target="-1" id="Fa7-vY-uyf"/>
+                    </connections>
+                </menuItem>
+            </items>
+            <point key="canvasLocation" x="413" y="218"/>
+        </menu>
+    </objects>
+</document>

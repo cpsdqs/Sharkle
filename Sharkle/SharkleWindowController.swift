@@ -51,6 +51,8 @@ class SharkleWindowController: NSWindowController {
 
             let rect = NSMakeRect(x, y, window!.frame.width, window!.frame.height)
             window!.setFrame(rect, display: true)
+        } else {
+            NSLog("WARNING: sharkle does not have a designated screen!")
         }
     }
 

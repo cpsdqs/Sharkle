@@ -47,30 +47,42 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let mainOnly = UserDefaults.standard.bool(forKey: CFG_MAIN_ONLY)
 
-        let screens = mainOnly ? [NSScreen.screens[0]] : NSScreen.screens
+        let screens = mainOnly
+            ? (NSScreen.screens.isEmpty ? [] : [NSScreen.screens[0]])
+            : NSScreen.screens
 
         for screen in screens {
             if sharkles[screen] == nil {
                 createSharkle(for: screen)
+            } else {
+                // copy screen data again
+                sharkles[screen]!.designatedScreen = screen
+                sharkles[screen]!.updateLocationInScreen()
             }
         }
         for screen in sharkles.keys {
             if !screens.contains(screen) {
                 deleteSharkle(for: screen)
-            } else {
-                sharkles[screen]!.updateLocationInScreen()
             }
         }
     }
 
     func createSharkle(for screen: NSScreen) {
-        NSLog("creating sharkle for screen \(screen.description)")
+        if #available(OSX 10.15, *) {
+            NSLog("creating sharkle for screen \(screen.localizedName)")
+        } else {
+            NSLog("creating sharkle for screen \(screen.description)")
+        }
         let sharkle = SharkleWindowController(on: screen)
         sharkles[screen] = sharkle
     }
 
     func deleteSharkle(for screen: NSScreen) {
-        NSLog("deleting sharkle for screen \(screen.description)")
+        if #available(OSX 10.15, *) {
+            NSLog("deleting sharkle for screen \(screen.localizedName)")
+        } else {
+            NSLog("creating sharkle for screen \(screen.description)")
+        }
         if let sharkle = sharkles.removeValue(forKey: screen) {
             sharkle.close()
         }

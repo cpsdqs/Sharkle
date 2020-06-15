@@ -11,10 +11,10 @@ import Cocoa
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    /// List of sharkles and their designated screen.
     var sharkles: [NSScreen:SharkleWindowController] = [:]
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
         syncDisplays()
 
         NotificationCenter.default.addObserver(
@@ -33,8 +33,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// Current preferences controller instance. May have been closed.
     var preferences: PreferencesWindowController?
 
+    /// Shows Sharkle preferences. Does nothing if preferences are already open.
     @IBAction func showSharklePreferences(_ sender: Any?) {
         if preferences?.window?.isVisible ?? false {
             return
@@ -42,6 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         preferences = PreferencesWindowController()
     }
 
+    /// Synchronizes Sharkles with the current display configuration.
     func syncDisplays() {
         NSLog("display configuration changed; updating sharkles")
 
@@ -67,6 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
     }
 
+    /// Creates a Sharkle for the given screen.
     func createSharkle(for screen: NSScreen) {
         if #available(OSX 10.15, *) {
             NSLog("creating sharkle for screen \(screen.localizedName)")
@@ -77,21 +81,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         sharkles[screen] = sharkle
     }
 
+    /// Deletes the Sharkle that corresponds to the given screen.
     func deleteSharkle(for screen: NSScreen) {
         if #available(OSX 10.15, *) {
             NSLog("deleting sharkle for screen \(screen.localizedName)")
         } else {
-            NSLog("creating sharkle for screen \(screen.description)")
+            NSLog("deleting sharkle for screen \(screen.description)")
         }
         if let sharkle = sharkles.removeValue(forKey: screen) {
             sharkle.close()
         }
     }
-
-    func applicationWillTerminate(_ aNotification: Notification) {
-        // Insert code here to tear down your application
-    }
-
 
 }
 

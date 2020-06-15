@@ -8,6 +8,7 @@
 
 import Cocoa
 
+/// NSUserDefaults keys
 let CFG_DARK = "dark"
 let CFG_MAIN_ONLY = "mainOnly"
 

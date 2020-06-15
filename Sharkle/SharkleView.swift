@@ -18,10 +18,15 @@ let SHARKLE_SOUND_COUNT = 7
 let SHARKLE_SOUND_NAME = { (n: Int) -> String in "sound\(n)" }
 
 class SharkleView: NSView {
+    /// CALayer into which the image will be drawn.
+    /// This exists because the Sharkle image resource has large margins.
     let imageLayer = CALayer()
+
+    /// Animation timer.
     var frameTimer: Timer?
 
-    var bubbleView: BubbleView?
+    /// The accompanying bubble view.
+    weak var bubbleView: BubbleView?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -40,6 +45,7 @@ class SharkleView: NSView {
         update()
     }
 
+    /// The last sound ID, to ensure that no sound is played twice in succession.
     var lastSharkleSoundId = -1
 
     override func mouseDown(with event: NSEvent) {
@@ -62,15 +68,20 @@ class SharkleView: NSView {
         bubbleView?.reset()
     }
 
+    /// If true, Sharkle is currently saying hi.
     var isSaying = false
+    /// If true, Sharkle will be drawn inverted.
     var inverted = false {
         didSet {
             imageLayer.compositingFilter = inverted ? CIFilter(name: "CIColorInvert") : nil
         }
     }
+    /// Frame number in the current animation.
     var currentFrame = 0
+    /// Number of frames until Sharkle stops saying hi.
     var sayTimeout = 0
 
+    /// Updates the animation.
     func update() {
         var frameCount: Int
         var frameName: (Int) -> String

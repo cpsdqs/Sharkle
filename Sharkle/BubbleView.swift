@@ -24,7 +24,11 @@ class BubbleView: NSView {
     }
 
     var currentFrame = 0
-    var inverted = false
+    var inverted = false {
+        didSet {
+            imageLayer.compositingFilter = inverted ? CIFilter(name: "CIColorInvert") : nil
+        }
+    }
 
     func reset() {
         currentFrame = -1 // will be set to 0 in update
@@ -40,7 +44,6 @@ class BubbleView: NSView {
         CATransaction.begin()
         CATransaction.setAnimationDuration(0)
         imageLayer.contents = NSImage(named: BUBBLE_FRAME(currentFrame / BUBBLE_FRAME_LEN))
-        imageLayer.compositingFilter = inverted ? CIFilter(name: "CIColorInvert") : nil
         CATransaction.commit()
     }
     

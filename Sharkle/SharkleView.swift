@@ -63,7 +63,11 @@ class SharkleView: NSView {
     }
 
     var isSaying = false
-    var inverted = false
+    var inverted = false {
+        didSet {
+            imageLayer.compositingFilter = inverted ? CIFilter(name: "CIColorInvert") : nil
+        }
+    }
     var currentFrame = 0
     var sayTimeout = 0
 
@@ -95,7 +99,6 @@ class SharkleView: NSView {
         CATransaction.begin()
         CATransaction.setAnimationDuration(0)
         imageLayer.contents = NSImage(named: frameName(currentFrame))
-        imageLayer.compositingFilter = inverted ? CIFilter(name: "CIColorInvert") : nil
         CATransaction.commit()
 
         if let bubbleView = bubbleView {

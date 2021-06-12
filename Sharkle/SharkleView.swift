@@ -27,6 +27,9 @@ class SharkleView: NSView {
 
     /// The accompanying bubble view.
     weak var bubbleView: BubbleView?
+    
+    /// The owning window's controller.
+    weak var windowController: SharkleWindowController?
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
@@ -66,6 +69,22 @@ class SharkleView: NSView {
         sayTimeout = SAY_DURATION
         currentFrame = 0
         bubbleView?.reset()
+    }
+    
+    override func scrollWheel(with event: NSEvent) {
+        if event.phase == .began {
+            var eventMonitor: Any? = nil
+            eventMonitor = NSEvent.addLocalMonitorForEvents(matching: NSEvent.EventTypeMask.scrollWheel) { evt in
+                self.scrollWheel(with: evt)
+                if evt.phase == .ended || evt.phase == .cancelled {
+                    NSEvent.removeMonitor(eventMonitor!)
+                }
+                return nil
+            }
+        }
+        
+        windowController?.scrolling = event.phase == .began || event.phase == .changed
+        windowController?.didScrollSharkle(deltaY: event.deltaY)
     }
 
     /// If true, Sharkle is currently saying hi.

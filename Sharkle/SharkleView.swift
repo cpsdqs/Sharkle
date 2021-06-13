@@ -72,12 +72,15 @@ class SharkleView: NSView {
     }
     
     override func scrollWheel(with event: NSEvent) {
-        if event.phase == .began {
-            var eventMonitor: Any? = nil
-            eventMonitor = NSEvent.addLocalMonitorForEvents(matching: NSEvent.EventTypeMask.scrollWheel) { evt in
+        if event.phase == .began && windowController != nil {
+            if windowController!.currentScrollMonitor != nil {
+                NSEvent.removeMonitor(windowController!.currentScrollMonitor!)
+            }
+            windowController!.currentScrollMonitor = NSEvent.addLocalMonitorForEvents(matching: NSEvent.EventTypeMask.scrollWheel) { evt in
                 self.scrollWheel(with: evt)
                 if evt.phase == .ended || evt.phase == .cancelled {
-                    NSEvent.removeMonitor(eventMonitor!)
+                    NSEvent.removeMonitor(self.windowController!.currentScrollMonitor!)
+                    self.windowController!.currentScrollMonitor = nil
                 }
                 return nil
             }

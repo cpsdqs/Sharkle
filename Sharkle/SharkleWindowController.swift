@@ -93,6 +93,7 @@ class SharkleWindowController: NSWindowController {
     var prevDisplayLinkTime: TimeInterval = 0
     var scrolling = false
     var emptyAnimationFrames = 0
+    var currentScrollMonitor: Any?
     
     func startDisplayLink() {
         if CVDisplayLinkIsRunning(displayLink!) {
